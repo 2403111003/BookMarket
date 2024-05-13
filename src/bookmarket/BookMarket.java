@@ -11,7 +11,6 @@ public class BookMarket {
 		Cart cart = new Cart();
 		ConsoleView view = new ConsoleView();
 		BookMarketController controller = new BookMarketController(bookStorage, cart, view);
-		
 		controller.start();
 	}
 

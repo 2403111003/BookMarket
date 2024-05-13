@@ -9,8 +9,8 @@ public class ConsoleView {
 
 	public void displayWelcome() {
 		String welcome = "*****************************************\n"
-				+ "*    Welcome to Hyejeong Book Market    *\n"
-				+ "*****************************************";
+					   + "*    Welcome to Hyejeong Book Market    *\n"
+					   + "*****************************************";
 		System.out.println(welcome);	
 	}
 
@@ -61,29 +61,59 @@ public class ConsoleView {
 		}
 	}
 
-	   public int selectBookId(BookStorage bookStorage) {
-		    Scanner input = new Scanner(System.in);
-		    boolean result;
-		    int bookId;
-		    do {
-		       System.out.println("추가할 도서의 ID를 입력하세요 : ");
-		       bookId = input.nextInt();
-		       result = bookStorage.isValidBook(bookId);
-		       if(!result) {
-		    	   System.out.println("잘못된 도서 ID입니다. ");
-		       }
-		    }while (!result);
-		      
-		      return bookId;
+	public boolean askConfirm(String message, String yes) {
+		
+		System.out.print(message);
+		
+		Scanner input = new Scanner(System.in);
+		if (input.nextLine().equals(yes)) return true;
+		return false;
+		
 	}
 
-	public boolean askConfirm(String message, String yes) {
-		System.out.println(message); 
+	public int selectBookId(BookStorage bookStorage) {
 		Scanner input = new Scanner(System.in);
-	      if(input.nextLine().equals(yes)) {
-	         return true;
-	      }else {
-	         return false;
-	      }	
+		
+		int bookId;
+		boolean result;
+		do {
+			System.out.print("추가할 도서의 ID를 입력하세요 : ");
+			bookId = input.nextInt();
+			result = bookStorage.isValidBook(bookId);
+			if (!result)
+				System.out.print("잘못된 도서의 ID입니다.");
+		} while (!result);
+		
+		return bookId;
 	}
+
+	public int selectBookId(Cart cart) {
+		Scanner input = new Scanner(System.in);
+		
+		int bookId;
+		boolean result;
+		do {
+			System.out.print("도서 ID 입력 : ");
+			bookId = input.nextInt();
+			result = cart.isValidItem(bookId);
+			if (!result)
+				System.out.print("잘못된 도서의 ID입니다.");
+		} while (!result);
+		
+		return bookId;
+	}
+
+	public int inputNumber(int min, int max) {
+		Scanner input = new Scanner(System.in);
+		int number;
+		do {
+			System.out.print(">> 수량 입력 (" + min + " ~ " + max + "): ");
+			number = input.nextInt();
+			if (number < min || number > max)
+				System.out.println("잘못된 수량입니다.");
+		} while (number < min || number > max);
+		
+		return number;
+	}
+
 }
